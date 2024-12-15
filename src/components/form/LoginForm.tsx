@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { loginSchema } from "../../validation";
 import Button from "../button/Button";
+import { CircularProgress } from "@mui/material";
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 type LoginFormType = {
@@ -12,7 +13,8 @@ const LoginForm = ({ onSubmit }: LoginFormType) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
@@ -64,7 +66,12 @@ const LoginForm = ({ onSubmit }: LoginFormType) => {
       </div>
 
       {/* Submit Button */}
-      <Button className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300" label="Login" type={"Submit"} />
+      <Button
+        isSubmitting={isSubmitting}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+        label={isSubmitting ? <CircularProgress size={30} color="inherit" /> : "Submit"}
+        type={"Submit"}
+      />
     </form>
   );
 };

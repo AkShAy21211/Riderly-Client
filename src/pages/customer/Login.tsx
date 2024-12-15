@@ -1,15 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authBg from "../../assets/background/auth.png";
 import LoginForm from "../../components/form/LoginForm";
 import { LoginFormType } from "../../types";
 import { login } from "../../api/customer";
-import { Toaster } from "sonner";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { loginUser } = useContext(AuthContext);
+
   // handler for login form
   const onSubmit = async (data: LoginFormType) => {
     try {
-      await login(data);
+      const response = await login(data);
+      if (response?.success) {
+        loginUser(response?.token);
+        navigate("/home", {
+          replace: true,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +49,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Toaster position="top-right" />
     </div>
   );
 };

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { AuthContext } from "../../context/AuthContext";
 const Header = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false); // State to manage the profile dropdown visibility
 
@@ -36,39 +38,45 @@ const Header = () => {
             {isProfileOpen && (
               <div className="absolute right-0 mt-2 bg-white text-black shadow-lg rounded-md w-48">
                 <ul className="space-y-2 p-3">
-                  <li>
-                    <Link
-                      to="/account-settings"
-                      className="block p-2 hover:bg-primary  hover:text-white rounded-md"
-                    >
-                      Account
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/register"
-                      className="block p-2 hover:bg-primary hover:text-white rounded-md"
-                    >
-                      Sign up
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/login"
-                      className="block p-2 hover:bg-primary hover:text-white rounded-md"
-                    >
-                      Sign in
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/logout"
-                      className="block p-2 hover:bg-primary hover:text-white rounded-md"
-                    >
-                      Logout
-                    </Link>
-                  </li>
+                  {!isAuthenticated ? (
+                    <>
+                      <li>
+                        <Link
+                          to="/register"
+                          className="block p-2 hover:bg-primary hover:text-white rounded-md"
+                        >
+                          Sign up
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/login"
+                          className="block p-2 hover:bg-primary hover:text-white rounded-md"
+                        >
+                          Sign in
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link
+                          to="/account-settings"
+                          className="block p-2 hover:bg-primary  hover:text-white rounded-md"
+                        >
+                          Account
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/logout"
+                          className="block p-2 hover:bg-primary hover:text-white rounded-md"
+                        >
+                          Logout
+                        </Link>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             )}
@@ -119,15 +127,25 @@ const Header = () => {
             <li className="hover:bg-white hover:text-black p-1 rounded-md">
               <Link to="#">Contact</Link>
             </li>
-            <li className="hover:bg-white hover:text-black p-1 rounded-md">
-              <Link to="#">Sign Up</Link>
-            </li>
-            <li className="hover:bg-white hover:text-black p-1 rounded-md">
-              <Link to="#">Sign In</Link>
-            </li>
-            <li className="hover:bg-white hover:text-black p-1 rounded-md">
-              <Link to="#">Logout</Link>
-            </li>
+            {!isAuthenticated ? (
+              <>
+                <li className="hover:bg-white hover:text-black p-1 rounded-md">
+                  <Link to="#">Sign Up</Link>
+                </li>
+                <li className="hover:bg-white hover:text-black p-1 rounded-md">
+                  <Link to="#">Sign In</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="hover:bg-white hover:text-black p-1 rounded-md">
+                  <Link to="#">Account</Link>
+                </li>
+                <li className="hover:bg-white hover:text-black p-1 rounded-md">
+                  <Link to="#">Logout</Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       )}

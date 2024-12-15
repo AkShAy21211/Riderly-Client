@@ -17,7 +17,7 @@ export const register = async (data: RegisterFormType) => {
         duration: 3000,
         position: "top-center",
       });
-      return;
+      return response.data;
     }
   } catch (error: any) {
     if (error.response?.status === 500) {
@@ -35,20 +35,20 @@ export const register = async (data: RegisterFormType) => {
   }
 };
 
-
 export const login = async (data: LoginFormType) => {
   try {
     const response = await axiosInstance.post<{
       success: boolean;
       message: string;
+      token: string;
     }>(customerEndPoint.login, data);
 
-    if (response?.data.success) {      
+    if (response?.data.success) {
       toast.success(response.data.message, {
         duration: 3000,
         position: "top-center",
       });
-      return;
+      return response.data;
     }
   } catch (error: any) {
     if (error.response?.status === 500) {

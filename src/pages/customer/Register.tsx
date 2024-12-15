@@ -1,15 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authBg from "../../assets/background/auth.png";
 import RegisterForm from "../../components/form/RegisterForm";
 import { RegisterFormType } from "../../types";
 import { register } from "../../api/customer";
-import {  Toaster } from "sonner";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   // handler for registration form
   const onSubmit = async (data: RegisterFormType) => {
     try {
-      await register(data);
+      const response = await register(data);
+      if (response?.success) {
+        navigate("/login", {
+          replace: true,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +46,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <Toaster position="top-right" />
     </div>
   );
 };

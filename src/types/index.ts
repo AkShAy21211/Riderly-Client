@@ -1,3 +1,5 @@
+import React from "react";
+
 export type RegisterFormType = {
   name: string;
   phone: string;
@@ -11,7 +13,8 @@ export type LoginFormType = {
 };
 
 export type ButtonType = {
-  label: string;
+  label: string | any;
+  isSubmitting?:boolean;
   onClick?: () => void;
   type: any;
   className: string;
@@ -30,9 +33,8 @@ export type ServiceType = {
 export type TestimonialCardType = {
   description: string;
   quoteIcon: string;
-  profile:{
+  profile: {
     name: string;
     avatar: string;
   };
 };
-
