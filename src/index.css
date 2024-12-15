@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Primary Green	#0F9D58	Buttons, icons, highlights
+0Secondary Blue	#4285F4	Secondary actions, text links
+Accent Yellow	#F4B400	Alerts, earnings, ratings
+Dark Gray	#333333	Primary text
+Light Gray	#F9F9F9	Background
+White	#FFFFFF	Cards, modals, form fields */
+
